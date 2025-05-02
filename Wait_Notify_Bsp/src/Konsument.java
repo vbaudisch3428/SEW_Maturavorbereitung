@@ -10,8 +10,8 @@ public class Konsument extends Thread {
         try {
             // Simuliere 5 Verbrauchsvorgänge
             for (int i = 0; i < 5; i++) {
-                lager.konsumieren();           // Versuch zu konsumieren
-                Thread.sleep(500);             // kleine Pause
+                lager.konsumieren(); // Versuch zu konsumieren
+                Thread.sleep(500); // kleine Pause
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
