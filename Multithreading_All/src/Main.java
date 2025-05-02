@@ -1,5 +1,7 @@
-import java.util.concurrent.*; // Für CountDownLatch und ArrayBlockingQueue
+import java.util.concurrent.*;
 import java.util.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 // Hauptklasse
 public class Main {
@@ -11,7 +13,7 @@ public class Main {
     private static final CountDownLatch latch = new CountDownLatch(4); // 2 Producer + 2 Consumer
 
     // Gemeinsames Objekt zur Synchronisation für wait/notify
-    private static final Object lock = new Object();
+    private static final Lock lock = new ReentrantLock();
 
     public static void main(String[] args) throws InterruptedException {
 

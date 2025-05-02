@@ -1,19 +1,27 @@
-import java.io.*;
 import java.net.*;
-import java.util.concurrent.*;
+import java.io.*;
 
 public class Server {
     public static void main(String[] args) throws IOException {
-        int port = 12345; // Portnummer für den Server
-        ServerSocket serverSocket = new ServerSocket(port); // Server starten
-        System.out.println("Server läuft auf Port " + port);
+        // 1. Erstelle einen ServerSocket auf Port 1234
+        ServerSocket serverSocket = new ServerSocket(1234);
 
-        ExecutorService pool = Executors.newCachedThreadPool(); // Threadpool
+        // 2. Warte darauf, dass sich ein Client verbindet
+        Socket clientSocket = serverSocket.accept();
 
-        // Auf Clients warten
-        while (true) {
-            Socket clientSocket = serverSocket.accept(); // Verbindung annehmen
-            pool.execute(new ClientHandler(clientSocket)); // Handler starten
-        }
+        // 3. Erstelle InputStream und OutputStream für den Client
+        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+
+        // 4. Lese Nachricht vom Client
+        String clientMessage = in.readLine();
+        System.out.println("Client sagt: " + clientMessage);
+
+        // 5. Schicke eine Antwort an den Client
+        out.println("Server hat deine Nachricht erhalten: " + clientMessage);
+
+        // 6. Schließe die Verbindung
+        clientSocket.close();
+        serverSocket.close();
     }
 }
